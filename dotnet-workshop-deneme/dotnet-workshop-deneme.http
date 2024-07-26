@@ -1,0 +1,6 @@
+@dotnet_workshop_deneme_HostAddress = http://localhost:5001
+
+GET {{dotnet_workshop_deneme_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
