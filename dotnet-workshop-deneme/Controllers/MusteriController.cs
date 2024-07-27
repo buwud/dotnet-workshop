@@ -6,25 +6,30 @@ namespace dotnet_workshop_deneme.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CustomerController : Controller
+    public class MusteriController : Controller
     {
-        private readonly Context _context;
+        //Context sınıfından bir nesne oluşturuldu
+        private readonly KutuphaneDbContext _context;
 
-        public CustomerController( Context context )
+        //oluşturulan nesne constructor metot ile çağırıldı
+        //bu sayede veritabanı işlemleri gerçekleştirilebilir
+        //bu sınıfın içindeki metotlar veritabanı işlemlerini gerçekleştirir
+        public MusteriController( KutuphaneDbContext context )
         {
             _context = context;
         }
 
         [HttpGet]
-        public ActionResult<List<Customer>> GetAll()
+        [Route("getall")]
+        public ActionResult<List<Musteri>> GetAll()
         {
-            return _context.Customers.ToList();
+            return _context.Musteriler.ToList();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Customer> GetById( int id )
+        public ActionResult<Musteri> GetById( int id )
         {
-            var customer = _context.Customers.Find(id);
+            var customer = _context.Musteriler.Find(id);
             if ( customer == null )
             {
                 return NotFound();
@@ -32,22 +37,22 @@ namespace dotnet_workshop_deneme.Controllers
             return Ok(customer);
         }
         [HttpPost]
-        public ActionResult<Customer> Create( Customer customer )
+        public ActionResult<Musteri> Create( Musteri customer )
         {
-            _context.Customers.Add(customer);
+            _context.Musteriler.Add(customer);
             _context.SaveChanges();
 
             return Ok(customer);
         }
-        [HttpPut("{id}")]
-        public ActionResult<Customer> Update( int id, Customer customer )
+        [HttpPatch("{id}")]
+        public ActionResult<Musteri> Update( int id, Musteri customer )
         {
             if ( id != customer.Id )
             {
                 return BadRequest("ID mismatch");
             }
 
-            var existingCustomer = _context.Customers.Find(id);
+            var existingCustomer = _context.Musteriler.Find(id);
             if ( existingCustomer == null )
             {
                 return NotFound();
@@ -61,13 +66,13 @@ namespace dotnet_workshop_deneme.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete( int id )
         {
-            var customer = _context.Customers.Find(id);
+            var customer = _context.Musteriler.Find(id);
             if ( customer == null )
             {
                 return NotFound();
             }
 
-            _context.Customers.Remove(customer);
+            _context.Musteriler.Remove(customer);
             _context.SaveChanges();
 
             return NoContent();

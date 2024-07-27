@@ -11,8 +11,8 @@ using dotnet_workshop_deneme.Data;
 namespace dotnet_workshop_deneme.Migrations
 {
     [DbContext(typeof(KutuphaneDbContext))]
-    [Migration("20240727103041_initial")]
-    partial class initial
+    [Migration("20240727183010_initial1")]
+    partial class initial1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,7 +24,7 @@ namespace dotnet_workshop_deneme.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("dotnet_workshop_deneme.Models.Customer", b =>
+            modelBuilder.Entity("dotnet_workshop_deneme.Models.Musteri", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,7 +32,7 @@ namespace dotnet_workshop_deneme.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
+                    b.Property<string>("Adres")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -40,17 +40,17 @@ namespace dotnet_workshop_deneme.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Isim")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Surname")
+                    b.Property<string>("Soyisim")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Musteriler");
                 });
 #pragma warning restore 612, 618
         }
