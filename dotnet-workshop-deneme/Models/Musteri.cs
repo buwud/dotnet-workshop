@@ -8,6 +8,7 @@
         public string Soyisim { get; set; }
         public string Adres { get; set; }
         public string Email { get; set; }
-        public List<Kitap> Kitaplar { get; set; }
+
+        public List<Kitap> Kitaplar { get; set; }=new List<Kitap>();
     }
 }

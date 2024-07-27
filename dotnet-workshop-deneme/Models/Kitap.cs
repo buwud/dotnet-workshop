@@ -10,8 +10,5 @@
         public string Icerik { get; set; }
         public string SayfaSayisi { get; set; }
 
-        //Kitap sınıfı ile Musteri sınıfı arasında bir ilişki kuruldu
-        public int MusteriId { get; set; }
-        public Musteri Musteri { get; set; }
     }
 }

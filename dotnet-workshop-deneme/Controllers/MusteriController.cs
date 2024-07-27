@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace dotnet_workshop_deneme.Controllers
 {
     [ApiController]
+    //Route belirtilen kısım, controller'ın route'unun başlangıç adresini belirler
+    //Bu sayede controller'a erişim sağlanabilir
+    //Bu controller'a erişim sağlamak için "api/musteri" adresi kullanılmalıdır
     [Route("api/[controller]")]
     public class MusteriController : Controller
     {
@@ -39,6 +42,7 @@ namespace dotnet_workshop_deneme.Controllers
         [HttpPost]
         public ActionResult<Musteri> Create( Musteri customer )
         {
+
             _context.Musteriler.Add(customer);
             _context.SaveChanges();
 
@@ -77,5 +81,60 @@ namespace dotnet_workshop_deneme.Controllers
 
             return NoContent();
         }
+        //musterilere kitap ekleme
+        [HttpPost("{id}/addbook")]
+        public ActionResult<Musteri> AddBook( int id, [FromBody] int bookId )
+        {
+            var customer = _context.Musteriler.Find(id);
+            if ( customer == null )
+            {
+                return NotFound();
+            }
+
+            var book = _context.Kitaplar.Find(bookId);
+            if ( book == null )
+            {
+                return NotFound();
+            }
+
+            customer.Kitaplar.Add(book);
+            _context.SaveChanges();
+
+            return Ok(customer);
+        }
+        //musteriden kitap silme
+        [HttpDelete("{id}/removebook")]
+        public ActionResult<Musteri> RemoveBook( int id, [FromBody] int bookId )
+        {
+            var customer = _context.Musteriler.Find(id);
+            if ( customer == null )
+            {
+                return NotFound();
+            }
+
+            var book = _context.Kitaplar.Find(bookId);
+            if ( book == null )
+            {
+                return NotFound();
+            }
+
+            customer.Kitaplar.Remove(book);
+            _context.SaveChanges();
+
+            return Ok(customer);
+        }
+
+        //müşterileri kitapları ile birlikte getirme
+        [HttpGet("{id}/books")]
+        public ActionResult<Musteri> GetBooks( int id )
+        {
+            var customer = _context.Musteriler.Find(id);
+            if ( customer == null )
+            {
+                return NotFound();
+            }
+            return Ok(customer.Kitaplar);
+        }
+
     }
 }
